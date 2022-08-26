@@ -72,6 +72,9 @@ target/
 # Jupyter NB Checkpoints
 .ipynb_checkpoints/
 
+# env
+.env
+
 # Mac OS-specific storage files
 .DS_Store
 
