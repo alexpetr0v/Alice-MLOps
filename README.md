@@ -3,6 +3,20 @@ Catch Me If You Can [MLOps practice]
 
 Web-user identification is a hot research topic on the brink of sequential pattern mining and behavioral psychology.
 
+Here we try to identify a user on the Internet tracking his/her sequence of attended Web pages. The algorithm to be built will take a webpage session (a sequence of webpages attended consequently by the same person) and predict whether it belongs to Alice or somebody else.
+
+The project was created for MLOps practice.
+
+## Data Description
+[Original data](https://www.kaggle.com/competitions/catch-me-if-you-can-intruder-detection-through-webpage-session-tracking2/data).
+
+The train set `train_sessions.csv` contains information on user browsing sessions where the features are:
+
+ - `site_i` – are ids of sites in this session. The mapping is given with a pickled dictionary `site_dic.pkl`
+ - `time_j` – are timestamps of attending the corresponding site
+ - `target` – whether this session belongs to Alice
+
+
 Project Organization
 ------------
 
@@ -65,3 +79,38 @@ Project Organization
     ├── dvc.yaml            <- DVC pipeline Settings
     │
     └── pyproject.toml      <- Standard project file, includes settings for additional components 
+    
+
+## Setup the project infrastructure 
+
+1. Clone the repository to a local computer
+```bash
+git clone https://github.com/alexpetr0v/catch-me-if-you-can.git
+```
+2. Download poetry & create a virtual environment
+```bash
+pip install poetry
+poetry install
+```
+3. Deploy Docker services
+```bash
+docker compose up -d --build
+```
+4. Run DVC pipeline
+```bash
+poetry run dvc repro
+```
+### To access the services:
+
+ - mnnio s3 storage http://127.0.0.1:9001
+ 
+ - mlflow server http://127.0.0.1:5000
+ 
+ - model web-service http://127.0.0.1:6060
+    
+    
+    
+    
+    
+    
+    
