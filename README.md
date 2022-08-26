@@ -1,4 +1,4 @@
-Alice
+Catch Me If You Can [MLOps practice]
 ==============================
 
 Web-user identification is a hot research topic on the brink of sequential pattern mining and behavioral psychology.
@@ -6,52 +6,62 @@ Web-user identification is a hot research topic on the brink of sequential patte
 Project Organization
 ------------
 
-    ├── LICENSE
-    ├── Makefile           <- Makefile with commands like `make data` or `make train`
-    ├── README.md          <- The top-level README for developers using this project.
+    ├── README.md          
+    ├── Docker              <- Docker files
+    ├── cfg                 <- Configuration files
+    │
     ├── data
-    │   ├── external       <- Data from third party sources.
-    │   ├── interim        <- Intermediate data that has been transformed.
-    │   ├── processed      <- The final, canonical data sets for modeling.
-    │   └── raw            <- The original, immutable data dump.
+    │   ├── external        <- Data from third party sources.
+    │   ├── interim         <- Intermediate data that has been transformed.
+    │   ├── processed       <- The final, canonical data sets for modeling.
+    │   ├── raw             <- The original, immutable data dump.
+    │   └── submission      <- Prediction data of the resulting model
     │
-    ├── docs               <- A default Sphinx project; see sphinx-doc.org for details
+    ├── docs                <- A default Sphinx project
+    ├── models              <- Trained and serialized models, model predictions, or model summaries
+    ├── notebooks           <- Jupyter notebooks
     │
-    ├── models             <- Trained and serialized models, model predictions, or model summaries
-    │
-    ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-    │                         the creator's initials, and a short `-` delimited description, e.g.
-    │                         `1.0-jqp-initial-data-exploration`.
-    │
-    ├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-    │
-    ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-    │   └── figures        <- Generated graphics and figures to be used in reporting
-    │
-    ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-    │                         generated with `pip freeze > requirements.txt`
-    │
-    ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
-    ├── src                <- Source code for use in this project.
-    │   ├── __init__.py    <- Makes src a Python module
+    ├── src                 <- Source code
+    │   ├── api             <- Model Web Service Scripts
+    │   │   ├── inference.py
+    │   │   ├── lr_model.py
+    │   │   ├── predicted_response.py
+    │   │   └── inference.py
+    │   │
+    │   ├── config          <- Scripts to changing working settings
+    │   │   └── config.py
     │   │
-    │   ├── data           <- Scripts to download or generate data
-    │   │   └── make_dataset.py
+    │   ├── data            <- Scripts to data processing
+    │   │   ├── add_missing_data.py
+    │   │   ├── extract_target.py
+    │   │   └── remove_bad_data.py
     │   │
-    │   ├── features       <- Scripts to turn raw data into features for modeling
-    │   │   └── build_features.py
+    │   ├── features        <- Scripts to turn raw data into features for modeling
+    │   │   ├── build_categorical_features.py
+    │   │   ├── build_features_pipeline.py
+    │   │   ├── build_numeric_features.py
+    │   │   ├── build_preference_features.py
+    │   │   ├── build_preferences_pipeline.py
+    │   │   ├── build_union_pipeline.py
+    │   │   ├── build_vectorizer.py
+    │   │   └── build_vectorizer_pipeline.py
     │   │
-    │   ├── models         <- Scripts to train models and then use trained models to make
-    │   │   │                 predictions
-    │   │   ├── predict_model.py
-    │   │   └── train_model.py
+    │   ├── models          <- Scripts to train models and then use trained models to make predictions
+    │   │   ├── create_submission.py
+    │   │   ├── optimize_model.py
+    │   │   ├── train_model.py
+    │   │   └── utils_mlflow.py
     │   │
-    │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
-    │       └── visualize.py
+    │   └── tests           <- Scripts for conducting tests
+    │       └── test_raw_data.py
     │
-    └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
-
-
---------
-
-<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
+    ├── .dvcignore          <- Dvcignore file
+    ├── .env                <- Env file for Docker services, contains keys only for local services
+    ├── .gitignore          <- Gitignore file
+    │
+    ├── docker-compose.yaml <- This is a Docker Compose file that will contain the instructions
+    │                          necessary to start and configure the services
+    │
+    ├── dvc.yaml            <- DVC pipeline Settings
+    │
+    └── pyproject.toml      <- Standard project file, includes settings for additional components 
