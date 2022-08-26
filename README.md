@@ -79,7 +79,19 @@ Project Organization
     ├── dvc.yaml            <- DVC pipeline Settings
     │
     └── pyproject.toml      <- Standard project file, includes settings for additional components 
-    
+
+## Technology stack
+
+ - Development language: python 3.9
+ - Dependency management: poetry
+ - Project template: [cookiecutter DS](https://github.com/drivendata/cookiecutter-data-science)
+ - Data version control system: [dvc](https://dvc.org/) + [minio](https://min.io/product/s3-compatibility)
+ - Runtime: [Docker](https://www.docker.com/)
+ - Code formatter: [black](https://pypi.org/project/black/)
+ - Tracking ML experiments: [mlflow scenario 4 (PostgreSQL, s3 minio)](https://mlflow.org/docs/latest/tracking.html#scenario-4-mlflow-with-remote-tracking-server-backend-and-artifact-stores)
+ - CLI: [click](https://palletsprojects.com/p/click/)
+ - API: [FastAPI](https://fastapi.tiangolo.com/) + [uvicorn](https://www.uvicorn.org/)
+ - Tests: great expectations, dvc repro
 
 ## Setup the project infrastructure 
 
@@ -102,11 +114,11 @@ poetry run dvc repro
 ```
 ### To access the services:
 
- - mnnio s3 storage http://127.0.0.1:9001
+ - minio s3 storage: http://127.0.0.1:9001
  
- - mlflow server http://127.0.0.1:5000
+ - mlflow server: http://127.0.0.1:5000
  
- - model web-service http://127.0.0.1:6060
+ - model web service: http://127.0.0.1:6060
     
     
     
