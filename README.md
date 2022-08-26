@@ -40,7 +40,7 @@ Project Organization
     │   │   ├── inference.py
     │   │   ├── lr_model.py
     │   │   ├── predicted_response.py
-    │   │   └── inference.py
+    │   │   └── session_information.py
     │   │
     │   ├── config          <- Scripts to changing working settings
     │   │   └── config.py
