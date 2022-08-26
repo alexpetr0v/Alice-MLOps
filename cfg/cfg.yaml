@@ -1,0 +1,46 @@
+mlflow:
+  tracking_uri: http://127.0.0.1:5000
+  lr_model_name: 'LogisticRegression'
+  lr_experiment_name: 'LogisticRegression'
+  transformer_model_name: 'FeatureBuilder'
+  transformer_experiment_name: 'DataTransformers'
+  transformer_tag: 'transformer'
+web_service:
+  url: http://localhost:6060
+  predict_proba_method: /predictproba
+  cache_timeout: 30
+  cache_size: 10
+  request_max_items: 200_000
+data:
+  id: session_id
+  target: target
+  sites: ['site1', 'site2', 'site3', 'site4', 'site5',
+          'site6', 'site7', 'site8', 'site9', 'site10']
+  times: ['time1', 'time2', 'time3', 'time4', 'time5',
+          'time6', 'time7', 'time8', 'time9', 'time10']
+eda:
+  missed_week: 49
+  abnormal_day: '2013-04-12'
+  alice_timetable: 
+    Monday:
+      - ['12:00:00', '13:50:00']
+      - ['15:50:00', '18:20:00']
+    Tuesday:
+      - ['12:00:00', '13:50:00']
+      - ['15:50:00', '18:20:00']
+    Wednesday:
+      - ['15:50:00', '18:20:00']
+    Thursday:
+      - ['12:00:00', '13:50:00']
+      - ['15:50:00', '18:20:00']
+    Friday:
+      - ['12:00:00', '13:50:00']
+      - ['15:50:00', '18:20:00']
+    Saturday:
+      - ['12:00:00', '13:50:00']
+      - ['15:50:00', '18:20:00']
+    Sunday:
+      - ['12:00:00', '13:50:00']
+      - ['15:50:00', '18:20:00']
+  alice_topics: ['cinema', 'film', 'media', 'movie', 'mtv', 'music', 'radio',
+                 'stream', 'tv', 'video', 'yt3', 'youwatch', 'ytimg', 'youtube']

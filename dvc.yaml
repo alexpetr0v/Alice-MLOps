@@ -1,0 +1,133 @@
+stages:
+
+
+  remove_bad_data:
+    cmd:
+      - python -m src.data.remove_bad_data
+          data/raw/train_sessions.csv
+          data/interim/clean_train_sessions.csv
+    deps:
+      - data/raw/train_sessions.csv
+      - src/data/remove_bad_data.py
+    outs:
+      - data/interim/clean_train_sessions.csv
+
+  add_missing_data:
+    cmd:
+      - python -m src.data.add_missing_data
+          data/interim/clean_train_sessions.csv
+          data/interim/add_missing_train_sessions.csv
+    deps:
+      - data/interim/clean_train_sessions.csv
+      - src/data/add_missing_data.py
+    outs:
+      - data/interim/add_missing_train_sessions.csv
+
+  extract_target:
+    cmd:
+      - python -m src.data.extract_target
+          data/interim/add_missing_train_sessions.csv
+          data/processed/target.csv
+    deps:
+      - data/interim/add_missing_train_sessions.csv
+      - src/data/extract_target.py
+    outs:
+      - data/processed/target.csv
+  
+  build_vectorizer_pipeline:
+    cmd:
+      - python -m src.features.build_vectorizer_pipeline
+          data/interim/add_missing_train_sessions.csv
+          data/interim/vect_train_data.npz
+          models/interim/build_vect_transformer.pkl
+    deps:
+      - data/interim/add_missing_train_sessions.csv
+      - src/features/build_vectorizer.py
+      - src/features/build_vectorizer_pipeline.py
+    outs:
+      - data/interim/vect_train_data.npz
+      - models/interim/build_vect_transformer.pkl
+
+  build_preferences_pipeline:
+    cmd:
+      - python -m src.features.build_preferences_pipeline
+          data/raw/site_dic.pkl
+          data/interim/add_missing_train_sessions.csv
+          data/interim/data_preferences.csv
+          models/interim/build_pref_transformer.pkl
+    deps:
+      - data/raw/site_dic.pkl
+      - data/interim/add_missing_train_sessions.csv
+      - src/features/build_preference_features.py
+      - src/features/build_preferences_pipeline.py
+    outs:
+      - data/interim/data_preferences.csv
+      - models/interim/build_pref_transformer.pkl
+
+  build_features_pipeline:
+    cmd:
+      - python -m src.features.build_features_pipeline
+          data/interim/add_missing_train_sessions.csv
+          data/interim/data_features.npz
+          models/interim/build_features_transformer.pkl
+    deps:
+      - data/interim/add_missing_train_sessions.csv
+      - src/features/build_categorical_features.py
+      - src/features/build_numeric_features.py
+      - src/features/build_features_pipeline.py
+    outs:
+      - data/interim/data_features.npz
+      - models/interim/build_features_transformer.pkl
+
+  build_union_pipeline:
+    cmd:
+      - python -m src.features.build_union_pipeline
+          data/interim/vect_train_data.npz
+          data/interim/data_preferences.csv
+          data/interim/data_features.npz
+          models/interim/build_vect_transformer.pkl
+          models/interim/build_pref_transformer.pkl
+          models/interim/build_features_transformer.pkl
+          data/processed/ready_data.npz
+          models/build_union_pipe.pkl
+    deps:
+      - data/interim/vect_train_data.npz
+      - data/interim/data_preferences.csv
+      - data/interim/data_features.npz
+      - src/features/build_union_pipeline.py
+      - models/interim/build_vect_transformer.pkl
+      - models/interim/build_pref_transformer.pkl
+      - models/interim/build_features_transformer.pkl
+    outs:
+      - data/processed/ready_data.npz
+      - models/build_union_pipe.pkl
+
+  optimize_model:
+    cmd:
+      - python -m src.models.optimize_model
+          data/processed/ready_data.npz
+          data/processed/target.csv
+          models/lr_preselected.txt
+          --remove_history
+    deps:
+      - data/processed/ready_data.npz
+      - data/processed/target.csv
+      - src/models/optimize_model.py
+      - src/models/train_model.py
+    outs:
+      - models/lr_preselected.txt
+  
+  create_submission:
+    cmd:
+      - python -m src.models.create_submission
+          data/raw/test_sessions.csv
+          data/submission/submission_lr.csv
+    deps:
+      - models/lr_parameters.json
+      - src/models/create_submission.py
+      - models/lr_preselected.txt
+      - http://127.0.0.1:6060/modelversion
+    outs:
+      - data/submission/submission_lr.csv
+
+

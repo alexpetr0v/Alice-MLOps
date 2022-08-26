@@ -1,0 +1,5 @@
+mlflow:
+    tracking_uri: http://mlflow:5000
+model_service:
+    cache_timeout: 600
+    cache_size: 10
