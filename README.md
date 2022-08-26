@@ -97,7 +97,7 @@ Project Organization
 
 1. Clone the repository to a local computer
 ```bash
-git clone https://github.com/alexpetr0v/catch-me-if-you-can.git
+git clone https://github.com/alexpetr0v/Alice-MLOps.git
 ```
 2. Download poetry & create a virtual environment
 ```bash
